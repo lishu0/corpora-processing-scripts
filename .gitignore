@@ -1,15 +1,78 @@
-blib/
-.build/
-_build/
-cover_db/
-inc/
-Build
-Build.bat
-.last_cover_stats
-Makefile
-Makefile.old
-MANIFEST.bak
-META.yml
-MYMETA.yml
-nytprof.out
-pm_to_blib
+#!/usr/bin/perl
+#this is a scripts like clean-corpus-n.perl, this one can adapt for three corpus: chinses, korean, korean with POS stemming
+use LWP::Simple;
+open HZ1,"<corpus.ch" or die $!;
+open HZ2,"<corpus.kr" or die $!;
+open HZ3,"<corpus.krpos" or die $!;
+# open C1,">test1" or die $!;
+open C2,">newcorpus.ch" or die $!;
+open C3,">newcorpus.kr" or die $!;
+open C4,">newcorpus.krpos" or die $!;
+# $a=0;
+# @store2=<HZ2>; 
+# @store3=<HZ3>; 
+# while ($aa = <HZ1>) {
+
+  		# $aa =~ s/\n/||/g;
+			# print C1 $aa;
+			# @store2[$a] =~ s/\n/@@/g;
+			# print C1 @store2[$a];
+			# print C1 @store3[$a];
+			# $a++;
+# }
+# close (HZ1);
+# close (HZ2);
+# close (HZ3);
+# open C1,"<test1" or die $!;
+
+$a= 0;
+@store1=<HZ1>;
+@store2=<HZ2>;
+@store3=<HZ3>;
+while ($a<91246) {
+	my $count1 = () = @store1[$a]=~ m/ /g;
+	my $count2 = () = @store2[$a]=~ m/ /g;
+	my $count3 = () = @store3[$a]=~ m/ /g;
+	# print C2 @store1[$a];
+	# print C3 @store2[$a];
+	# print C4 @store3[$a];
+	
+	if ($count1 < 25) { # '25' means the length of sentence you want to limit, we take the unit as 'blank', you can change 
+			if ($count2 < 25) {
+				if ($count3 < 25) {
+					print C2 @store1[$a]; 
+					print C3 @store2[$a];
+					print C4 @store3[$a];
+				}
+			}	
+	}
+	$a++;
+}
+
+close (HZ1);
+close (HZ2);
+close (HZ3);
+close (C2);
+close (C3);
+close (C4);
+
+# while (<C1>) {
+	# if (/(.+)||(.+)@@(.+)/) {
+		# my $count1 = @a1 = $1=~ m/ /g;
+		# my $count2 = @a2 = $2=~ m/ /g;
+		# my $count3 = @a3 = $3=~ m/ /g;
+		
+		# if ($count1 < 25) {
+			# if ($count2 < 25) {
+				# if ($count3 < 25) {
+					# #print C2 $_;
+				# }
+			# }
+		# }
+		# print C2 $1;# print C2 $1;
+	# }
+# }
+
+# $a = "被 称为 扩张 知觉 的 迷幻药";
+# my $count = () = $a =~ m/ /g;
+# print $count;
